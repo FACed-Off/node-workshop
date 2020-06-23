@@ -27,6 +27,18 @@ function handler(request, response) {
         response.writeHead(200, {"content-type":"text/html"})
         response.write("node url reached")
         response.end();
+    } else {
+        const fileExtension = endpoint.split(".")[1]
+        response.writeHead(200, {"content-type":`text/${fileExtension}`})
+
+        fs.readFile(__dirname + `/public/${endpoint}`, function(error, file){
+            console.log(`sending ${endpoint}`)
+            if (error) {
+                console.log(error);
+                return;
+            }
+            response.end(file);
+        })
     }
 }
 
