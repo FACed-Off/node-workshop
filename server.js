@@ -28,6 +28,9 @@ function handler(request, response) {
         response.writeHead(200, { "content-type": "text/html" })
         response.write("node url reached")
         response.end();
+    } else if (endpoint === "/create-post") {
+        response.writeHead(302, {"location": "/"})
+        response.end();
     } else {
         const fileExtension = endpoint.split(".")[1]
         response.writeHead(200, { "content-type": `text/${fileExtension}` })
