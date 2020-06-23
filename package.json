@@ -1,0 +1,19 @@
+{
+  "name": "node-girls-workshop",
+  "version": "1.0.0",
+  "description": "<img src=\"readme-images/logo.png\" alt=\"node-girls-logo\" styles=\"text-align:center;\" />",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FACed-Off/node-workshop.git"
+  },
+  "author": "Meeran / Shivani",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FACed-Off/node-workshop/issues"
+  },
+  "homepage": "https://github.com/FACed-Off/node-workshop#readme"
+}
