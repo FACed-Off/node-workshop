@@ -4,7 +4,6 @@ const querystring = require("querystring");
 function handler(request, response) {
   const endpoint = request.url;
   const method = request.method;
-  console.log(`${method} ${endpoint}`);
 
   if (endpoint === "/") {
     response.writeHead(200, { "content-type": "text/html" });

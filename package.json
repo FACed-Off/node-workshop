@@ -4,7 +4,9 @@
   "description": "<img src=\"readme-images/logo.png\" alt=\"node-girls-logo\" styles=\"text-align:center;\" />",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test-watch": "jest --watch",
+    "test-cov": "jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,15 @@
   "bugs": {
     "url": "https://github.com/FACed-Off/node-workshop/issues"
   },
-  "homepage": "https://github.com/FACed-Off/node-workshop#readme"
+  "homepage": "https://github.com/FACed-Off/node-workshop#readme",
+  "devDependencies": {
+    "jest": "^26.1.0",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{ts,js}",
+      "public/**/*.{ts,js}"
+    ]
+  }
 }
