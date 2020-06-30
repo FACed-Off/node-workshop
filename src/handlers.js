@@ -1,5 +1,6 @@
 const fs = require("fs");
 const querystring = require("querystring");
+const path = require("path");
 
 function handler(request, response) {
   const endpoint = request.url;
@@ -17,18 +18,46 @@ function handler(request, response) {
       response.end(file);
     });
   } else if (endpoint === "/create/post") {
-    response.writeHead(302, { location: "/" });
-    response.end();
-  } else if (endpoint === "/posts"){
-    response.writeHead(200, {"content-type": "application/json"})
+    var allTheData = "";
+    request.on("data", function (chunkOfData) {
+      allTheData += chunkOfData;
+    });
 
-    fs.readFile(__dirname + "/posts.json", function (error, file) {
-      if (error) {
-        console.log(error);
-        return;
+    request.on("end", function () {
+      var convertedData = querystring.parse(allTheData);
+
+      fs.readFile(path.join(__dirname, "posts.json"), function (err, file) {
+        if (err) {
+          throw new Error(err);
+        }
+        var posts = JSON.parse(file.toString());
+        posts[Date.now()] = convertedData.post;
+        fs.writeFile(
+          path.join(__dirname, "./posts.json"),
+          JSON.stringify(posts),
+          function (err) {
+            if (err) {
+              throw new Error(err);
+            } else {
+              response.writeHead(302, { Location: "/" });
+              response.end();
+            }
+          }
+        );
+      });
+    });
+  } else if (endpoint === "/posts") {
+    // response.writeHead(200, { "content-type": "application/json" });
+    fs.readFile(path.join(__dirname, "posts.json"), "utf8", function (
+      err,
+      file
+    ) {
+      if (err) {
+        throw new Error(err);
       }
+      response.writeHead(200, { "Content-Type": "application/json" });
       response.end(file);
-    })
+    });
   } else {
     const fileExtension = endpoint.split(".")[1];
     response.writeHead(200, { "content-type": `text/${fileExtension}` });
@@ -37,13 +66,12 @@ function handler(request, response) {
 
       let allTheData = "";
       request.on("data", function (chunkOfData) {
+        console.log(chunkOfData);
         allTheData += chunkOfData;
       });
 
       request.on("end", function () {
         const convertedData = querystring.parse(allTheData);
-        console.log(convertedData);
-        response.end();
       });
 
       if (error) {
