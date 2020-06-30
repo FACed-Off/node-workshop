@@ -16,13 +16,22 @@ function handler(request, response) {
       }
       response.end(file);
     });
-  } else if (endpoint === "/create-post") {
+  } else if (endpoint === "/create/post") {
     response.writeHead(302, { location: "/" });
     response.end();
+  } else if (endpoint === "/posts"){
+    response.writeHead(200, {"content-type": "application/json"})
+
+    fs.readFile(__dirname + "/posts.json", function (error, file) {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      response.end(file);
+    })
   } else {
     const fileExtension = endpoint.split(".")[1];
     response.writeHead(200, { "content-type": `text/${fileExtension}` });
-
     fs.readFile(__dirname + `/../public${endpoint}`, function (error, file) {
       console.log(`sending ${endpoint}`);
 

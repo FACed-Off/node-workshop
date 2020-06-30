@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/FACed-Off/node-workshop/issues"
   },
-  "homepage": "https://github.com/FACed-Off/node-workshop#readme"
+  "homepage": "https://github.com/FACed-Off/node-workshop#readme",
+  "devDependencies": {
+    "jest": "^26.1.0"
+  }
 }
