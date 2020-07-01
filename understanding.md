@@ -55,12 +55,12 @@ request.on("data", function (chunkOfData) {
 * When the request data chunks have been collated, aka `request.on("end"...`
 * Run a function which:
     * Converts the `POST` data string into a more usable object using the `querystring` module
-        * Turns `post=testing+post+34%25` into { post: 'testing post 34%' } using `convertedData = querystring.parse(allTheData);`
+        * Turns `post=testing+post+34%25` into `{ post: 'testing post 34%' }`using `convertedData = querystring.parse(allTheData);`
     * Reads our file located at posts.JSON (which contains our current posts), the file will be returned as a buffer here
     > Why is it given as a buffer here?
     * Convert our buffer into a string, and then parse using JSON.parse to convert it to a JSON object `JSON.parse(file.toString())`
     * Add a new key-value pair to our posts JSON object, with the key being the current time, and the value being the `post` value of our convertedData object
-        * posts[Date.now()] = convertedData.post takes the current time, adds it as a key and gives it the value of `testing post 34%`
+        * `posts[Date.now()] = convertedData.post` takes the current time, adds it as a key and gives it the value of `testing post 34%`
         * See 'object assignment in javascript' tutorials as a reminder here if needed
     * We then use the fs writeFile method to write to the posts.JSON file on our machine
         * The writeFile method has three parameters:
