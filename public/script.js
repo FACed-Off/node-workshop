@@ -31,8 +31,11 @@
 //     xhr.send();
 //   }
 // };
-fetch("posts").then(response => {
-  response.json();
-}).then(data => {
-  console.log(data);
-})
+document.onreadystatechange = function () {
+  if (document.readyState === "complete") {
+  fetch("/posts").then(response => {
+    response.json();
+  }).then(data => {
+    console.log(data);
+  })
+}}
