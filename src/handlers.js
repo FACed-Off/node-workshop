@@ -6,16 +6,16 @@ function handler(request, response) {
   const endpoint = request.url;
   const method = request.method;
 
-  if (endpoint === "/") {
-    response.writeHead(200, { "content-type": "text/html" });
+  // if (endpoint === "/") {
+  //   response.writeHead(200, { "content-type": "text/html" });
 
-    fs.readFile(__dirname + "/../public/index.html", function (error, file) {
-      if (error) {
-        return;
-      }
-      response.end(file);
-    });
-  } else if (endpoint === "/create/post") {
+  //   fs.readFile(__dirname + "/../public/index.html", function (error, file) {
+  //     if (error) {
+  //       return;
+  //     }
+  //     response.end(file);
+  //   });
+  if (endpoint === "/create/post") {
     var allTheData = "";
     request.on("data", function (chunkOfData) {
       allTheData += chunkOfData;
