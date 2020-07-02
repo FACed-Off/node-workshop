@@ -5,14 +5,12 @@ const path = require("path");
 function handler(request, response) {
   const endpoint = request.url;
   const method = request.method;
-  console.log(`${method} ${endpoint}`);
 
   if (endpoint === "/") {
     response.writeHead(200, { "content-type": "text/html" });
 
     fs.readFile(__dirname + "/../public/index.html", function (error, file) {
       if (error) {
-        console.log(error);
         return;
       }
       response.end(file);
@@ -62,11 +60,9 @@ function handler(request, response) {
     const fileExtension = endpoint.split(".")[1];
     response.writeHead(200, { "content-type": `text/${fileExtension}` });
     fs.readFile(__dirname + `/../public${endpoint}`, function (error, file) {
-      console.log(`sending ${endpoint}`);
 
       let allTheData = "";
       request.on("data", function (chunkOfData) {
-        console.log(chunkOfData);
         allTheData += chunkOfData;
       });
 
