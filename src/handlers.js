@@ -57,25 +57,46 @@ function handler(request, response) {
       response.end(file);
     });
   } else {
-    const fileExtension = endpoint.split(".")[1];
-    response.writeHead(200, { "content-type": `text/${fileExtension}` });
-    fs.readFile(__dirname + `/../public${endpoint}`, function (error, file) {
-
-      let allTheData = "";
-      request.on("data", function (chunkOfData) {
-        allTheData += chunkOfData;
-      });
-
-      request.on("end", function () {
-        const convertedData = querystring.parse(allTheData);
-      });
-
+    const types = {
+      html: "text/html",
+      css: "text/css",
+      js: "application/javascript",
+      ico: "image/x-icon",
+      jpg: "image/jpeg",
+      png: "image/png",
+    };
+    console.log(endpoint);
+    const endpointArray = endpoint.split(".");
+    const extension = endpointArray[1];
+    const type = types[extension];
+    console.log(type);
+    fs.readFile(path.join(__dirname, "..", "public", endpoint), function (
+      error,
+      file
+    ) {
       if (error) {
-        console.log(error);
-        return;
+        throw new Error(error);
+      } else {
+        response.writeHead(200, { "Content-Type": type });
+        response.end(file);
       }
-      response.end(file);
     });
+    // const fileExtension = endpoint.split(".")[1];
+    // response.writeHead(200, { "content-type": `text/${fileExtension}` });
+    // fs.readFile(__dirname + `/../public${endpoint}`, function (error, file) {
+    //   let allTheData = "";
+    //   request.on("data", function (chunkOfData) {
+    //     allTheData += chunkOfData;
+    //   });
+    //   request.on("end", function () {
+    //     const convertedData = querystring.parse(allTheData);
+    //   });
+    //   if (error) {
+    //     console.log(error);
+    //     return;
+    //   }
+    //   response.end(file);
+    // });
   }
 }
 
