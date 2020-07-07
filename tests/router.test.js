@@ -1,5 +1,8 @@
 const router = require("../router");
 const supertest = require("supertest");
+const mock = require("mock-fs");
+const miscHandler = require("../src/handlers/misc");
+
 
 it("returns a status code of 200 on the home root", () => {
   return supertest(router)
@@ -31,5 +34,15 @@ it("returns a status code of 200 when using different file types", () => {
       .expect(200)
       //.expect("content-type", "application/json")
       .then((response) => expect(response.status).toBe(200))
+  );
+});
+
+it("utilises the miscHandler for requests that are not otherwise handled", () => {
+  //Checks if miscHandler is called exactly once
+  const mockCallBack = jest.fn(miscHandler)
+  return (
+      supertest(router)
+        .get("/main.css")
+        .expect(mockCallBack.mock.calls.length).toBe(1)
   );
 });
