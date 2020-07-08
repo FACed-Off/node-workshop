@@ -39,10 +39,14 @@ it("returns a status code of 200 when using different file types", () => {
 
 it("utilises the miscHandler for requests that are not otherwise handled", () => {
   //Checks if miscHandler is called exactly once
-  const mockCallBack = jest.fn(miscHandler)
+  const mockCallBack = jest.fn(miscHandler);
+  console.log(miscHandler);
   return (
       supertest(router)
         .get("/main.css")
-        .expect(mockCallBack.mock.calls.length).toBe(1)
-  );
+        .then((response) => expect(response.status).toBe(200))
+        .then(
+          expect(mockCallBack).toHaveBeenCalledTimes(1)
+        )
+  )
 });

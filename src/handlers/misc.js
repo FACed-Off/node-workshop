@@ -11,11 +11,9 @@ function miscHandler(request, response) {
     jpg: "image/jpeg",
     png: "image/png",
   };
-  console.log(endpoint);
   const endpointArray = endpoint.split(".");
   const extension = endpointArray[1];
   const type = types[extension];
-  console.log(type);
   fs.readFile(path.join(__dirname, "..", "..", "public", endpoint), function (
     error,
     file
