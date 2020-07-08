@@ -19,7 +19,8 @@ function miscHandler(request, response) {
     file
   ) {
     if (error) {
-      throw new Error(error);
+      response.statusCode = 500;
+      response.end("<h1>Server Error</h1>");
     } else {
       response.writeHead(200, { "Content-Type": type });
       response.end(file);
